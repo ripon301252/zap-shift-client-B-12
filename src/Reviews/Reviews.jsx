@@ -8,12 +8,13 @@ import { EffectCoverflow, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import ReviewCard from "./ReviewCard";
 
 const Reviews = ({ reviewsPromise }) => {
-  const review = use(reviewsPromise);
-
+  const reviews = use(reviewsPromise);
+  console.log(reviews)
   return (
-    <div>
+    <div className="my-10">
       <div>
         <img className="mx-auto" src={reviewImg} alt="" />
       </div>
@@ -29,7 +30,7 @@ const Reviews = ({ reviewsPromise }) => {
       </p>
 
       <h3 className="text-center text-xl my-7">
-        <span className="font-bold">Reviews :</span> {review.length}
+        <span className="font-bold">Reviews :</span> {reviews.length}
       </h3>
 
       <Swiper
@@ -48,37 +49,11 @@ const Reviews = ({ reviewsPromise }) => {
         modules={[EffectCoverflow, Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img
-            className="mx-auto h-64 object-cover rounded-xl"
-            style={{ width: "250px" }}
-            src="https://swiperjs.com/demos/images/nature-1.jpg"
-          />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <img
-            className="mx-auto h-64 object-cover rounded-xl"
-            style={{ width: "250px" }}
-            src="https://swiperjs.com/demos/images/nature-2.jpg"
-          />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <img
-            className="mx-auto h-64 object-cover rounded-xl"
-            style={{ width: "250px" }}
-            src="https://swiperjs.com/demos/images/nature-3.jpg"
-          />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <img
-            className="mx-auto h-64 object-cover rounded-xl"
-            style={{ width: "250px" }}
-            src="https://swiperjs.com/demos/images/nature-4.jpg"
-          />
-        </SwiperSlide>
+        {reviews.map((singleReview) => (
+          <SwiperSlide key={singleReview.id}>
+            <ReviewCard singleReview={singleReview}></ReviewCard>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
