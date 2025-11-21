@@ -1,18 +1,34 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../Layout/Root";
 import Home from "../Pages/Home/Home";
+import Coverage from "../Pages/Coverage/Coverage";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import Services from "../Pages/Services/Services";
 
 
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <Root></Root>,
+        element: <Root />,
         children: [
             {
                 path: '/',
-                element: <Home></Home>
-            }
+                element: <Home />
+            },
+            {
+                path: '/coverage',
+                element: <Coverage />,
+                loader: () => fetch('/serviceCenter.json').then(res => res.json())
+            },
+            {
+                path: '/about',
+                element: <AboutUs />
+            },
+            {
+                path: '/services',
+                element: <Services />
+            },
         ]
     }
 ])

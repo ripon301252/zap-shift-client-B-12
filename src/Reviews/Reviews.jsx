@@ -2,7 +2,7 @@ import React, { use } from "react";
 import reviewImg from "../assets/customer-top.png";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination } from "swiper/modules";
+import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 // Swiper CSS MUST
 import "swiper/css";
@@ -14,7 +14,7 @@ const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
   console.log(reviews)
   return (
-    <div className="my-10">
+    <div className="lg:my-10 my-14 lg:mx-20 mx-5">
       <div>
         <img className="mx-auto" src={reviewImg} alt="" />
       </div>
@@ -34,27 +34,39 @@ const Reviews = ({ reviewsPromise }) => {
       </h3>
 
       <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={3} // FIXED
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        }}
-        pagination={true}
-        modules={[EffectCoverflow, Pagination]}
-        className="mySwiper"
-      >
-        {reviews.map((singleReview) => (
-          <SwiperSlide key={singleReview.id}>
-            <ReviewCard singleReview={singleReview}></ReviewCard>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+  loop={true}
+  effect={"coverflow"}
+  grabCursor={true}
+  centeredSlides={true}
+  slidesPerView={1} 
+  breakpoints={{
+    640: { slidesPerView: 1 },
+    768: { slidesPerView: 2 },
+    1024: { slidesPerView: 3 }
+  }}
+  coverflowEffect={{
+    rotate: 30,
+    stretch: '50%',
+    depth: 200,
+    modifier: 1,
+    scale: 0.75,
+    slideShadows: true,
+  }}
+  autoplay={{
+    delay: 2000,
+    disableOnInteraction: false
+  }}
+  pagination={{ clickable: true }}
+  modules={[EffectCoverflow, Pagination, Autoplay]}
+  className="mySwiper relative pb-10"
+>
+  {reviews.map((singleReview) => (
+    <SwiperSlide key={singleReview.id}>
+      <ReviewCard singleReview={singleReview} />
+    </SwiperSlide>
+  ))}
+</Swiper>
+
     </div>
   );
 };

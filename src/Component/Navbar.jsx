@@ -1,24 +1,30 @@
 import React from "react";
 import logoImg from "../assets/logo.png";
 import { FaArrowRight } from "react-icons/fa6";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 
 const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to={``}>Submenu 1</NavLink>
+        <NavLink to={`/`}>Home</NavLink>
       </li>
       <li>
-        <NavLink to={``}>Submenu 2</NavLink>
+        <NavLink to={`/services`}>Services</NavLink>
+      </li>
+      <li>
+        <NavLink to={`/about`}>About Us</NavLink>
+      </li>
+      <li>
+        <NavLink to={`/coverage`}>Coverage</NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="bg-base-100 shadow-sm">
-      <div className="navbar max-w-7xl mx-auto  pt-3">
+    <div className="bg-base-100 shadow-sm sticky top-0 z-10">
+      <div className="navbar max-w-7xl mx-auto pt-3">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -45,10 +51,10 @@ const Navbar = () => {
                 {links}
             </ul>
           </div>
-          <div className="flex relative -mr-10">
+          <Link to={`/`} className="flex relative -mr-10">
             <img className="w-7 absolute -mt-3 " src={logoImg} alt="" />
             <a className="btn btn-ghost text-xl">ZapShift</a>
-          </div>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
