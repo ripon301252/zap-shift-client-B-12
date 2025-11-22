@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Coverage from "../Pages/Coverage/Coverage";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Services from "../Pages/Services/Services";
+import AuthLayout from "../AuthLayout/AuthLayout";
 
 
 
@@ -28,6 +29,20 @@ export const router = createBrowserRouter([
             {
                 path: '/services',
                 element: <Services />
+            },
+            {
+                path: '/',
+                element: <AuthLayout />,
+                children: [
+                    {
+                        path: '/login',
+
+                    },
+                    {
+                        path: '/register',
+                        
+                    }
+                ]
             },
         ]
     }

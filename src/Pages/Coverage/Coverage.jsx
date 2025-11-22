@@ -6,22 +6,24 @@ import { useLoaderData } from "react-router";
 const Coverage = () => {
   const position = [23.685, 90.3563];
   const serviceCenters = useLoaderData();
-  const mapRef = useRef(null)
+  const mapRef = useRef(null);
   console.log(serviceCenters);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const location = e.target.location.value;
-    const district = serviceCenters.find(c => c.district.toLowerCase().includes(location.toLowerCase()))
-    if(district){
-        const coOrd = [district.latitude, district.longitude]
-        console.log(district, coOrd)
-        mapRef.current.flyTo(coOrd, 12)
+    const district = serviceCenters.find((c) =>
+      c.district.toLowerCase().includes(location.toLowerCase())
+    );
+    if (district) {
+      const coOrd = [district.latitude, district.longitude];
+      console.log(district, coOrd);
+      mapRef.current.flyTo(coOrd, 12);
     }
   };
 
   return (
-    <div className="mx-24 my-10">
+    <div className="lg:mx-24 mx-5 my-10 ">
       <h1 className="text-4xl text-center font-bold mb-5">
         We are available in 64 districts
       </h1>
@@ -44,11 +46,16 @@ const Coverage = () => {
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" name="location" className="grow" placeholder="Search" />
+            <input
+              type="search"
+              name="location"
+              className="grow"
+              placeholder="Search"
+            />
           </label>
         </form>
       </div>
-      <div className="border w-full h-[500px]">
+      <div className="border w-full h-[500px] relative z-0">
         <MapContainer
           center={position}
           zoom={8}
@@ -62,7 +69,7 @@ const Coverage = () => {
           />
           {serviceCenters.map((center, index) => (
             <Marker key={index} position={[center.latitude, center.longitude]}>
-              <Popup>
+              <Popup className="custom-popup">
                 <strong className="text-xl text-green-600">
                   {center.district}
                 </strong>
@@ -72,7 +79,7 @@ const Coverage = () => {
                   </span>{" "}
                   <span className="text-orange-600">
                     {center.covered_area.join(", ")}.
-                  </span>{" "}
+                  </span>
                 </p>
               </Popup>
             </Marker>

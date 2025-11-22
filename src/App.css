@@ -1,0 +1,18 @@
+/* Make popup responsive */
+.popup-responsive .leaflet-popup-content {
+  max-width: 85vw !important; /* Mobile friendly width */
+  width: auto !important;
+  word-wrap: break-word;
+  padding: 8px 10px;
+}
+
+/* Popup wrapper padding adjust */
+.popup-responsive .leaflet-popup-content-wrapper {
+  padding: 10px !important;
+  border-radius: 8px;
+}
+
+/* Prevent content overflow */
+.popup-responsive .leaflet-popup-content p {
+  margin: 6px 0;
+}
