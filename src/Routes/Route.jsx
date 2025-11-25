@@ -5,45 +5,53 @@ import Coverage from "../Pages/Coverage/Coverage";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import Services from "../Pages/Services/Services";
 import AuthLayout from "../AuthLayout/AuthLayout";
-
-
+import Login from "../AuthLayout/login";
+import Register from "../AuthLayout/Register";
+import PrivateRouts from "./PrivateRouts";
+import Rider from "../Pages/Rider/Rider";
 
 export const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Root />,
-        children: [
-            {
-                path: '/',
-                element: <Home />
-            },
-            {
-                path: '/coverage',
-                element: <Coverage />,
-                loader: () => fetch('/serviceCenter.json').then(res => res.json())
-            },
-            {
-                path: '/about',
-                element: <AboutUs />
-            },
-            {
-                path: '/services',
-                element: <Services />
-            },
-            {
-                path: '/',
-                element: <AuthLayout />,
-                children: [
-                    {
-                        path: '/login',
-
-                    },
-                    {
-                        path: '/register',
-                        
-                    }
-                ]
-            },
-        ]
-    }
-])
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/coverage",
+        element: <Coverage />,
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
+      },
+      {
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/rider",
+        element: <PrivateRouts>
+          <Rider></Rider>
+        </PrivateRouts>,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
+      },
+    ],
+  },
+]);

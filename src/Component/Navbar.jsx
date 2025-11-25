@@ -2,9 +2,19 @@ import React from "react";
 import logoImg from "../assets/logo.png";
 import { FaArrowRight } from "react-icons/fa6";
 import { Link, NavLink } from "react-router";
-
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -48,7 +58,7 @@ const Navbar = () => {
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-                {links}
+              {links}
             </ul>
           </div>
           <Link to={`/`} className="flex relative -mr-10">
@@ -57,13 +67,18 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-             {links}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn mr-3">Login</a>
-          <a className="btn ">Be a rider</a>
+          {user ? (
+            <a onClick={handleLogout} className="btn mr-3">Sign Out</a>
+          ) : (
+            <Link to={`login`} className="btn mr-3">
+              Sign In
+            </Link>
+          )}
+
+          <Link to={`/rider`} className="btn bg-[#caeb66]">Be a rider</Link>
           <FaArrowRight className="bg-[#361c1c] p-2 text-4xl rounded-full -rotate-45 cursor-pointer text-white" />
         </div>
       </div>
