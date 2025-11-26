@@ -10,6 +10,11 @@ import Register from "../AuthLayout/Register";
 import PrivateRouts from "./PrivateRouts";
 import Rider from "../Pages/Rider/Rider";
 import ResetPassword from "../AuthLayout/ResetPassword";
+import Story from "../Pages/AboutUs/Story";
+import Mission from "../Pages/AboutUs/Mission";
+import Success from "../Pages/AboutUs/Success";
+import TeamOthers from "../Pages/AboutUs/TeamOthers";
+import SendParcel from "../Pages/SendParcel/SendParcel";
 
 export const router = createBrowserRouter([
   {
@@ -22,23 +27,52 @@ export const router = createBrowserRouter([
       },
       {
         path: "/coverage",
-        element: <Coverage />,
+        element: <PrivateRouts>
+          <Coverage />
+        </PrivateRouts>,
         loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
-      },
-      {
-        path: "/about",
-        element: <AboutUs />,
       },
       {
         path: "/services",
         element: <Services />,
       },
       {
-        path: "/rider",
+        path: "/sendParcel",
         element: <PrivateRouts>
-          <Rider></Rider>
+          <SendParcel />
         </PrivateRouts>,
       },
+      {
+        path: "/rider",
+        element: (
+          <PrivateRouts>
+            <Rider></Rider>
+          </PrivateRouts>
+        ),
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
+        children: [
+          {
+            path: "story",
+            element: <Story />,
+          },
+          {
+            path: "mission",
+            element: <Mission />,
+          },
+          {
+            path: "success",
+            element: <Success />,
+          },
+          {
+            path: "team",
+            element: <TeamOthers />,
+          },
+        ],
+      },
+      
     ],
   },
   {
