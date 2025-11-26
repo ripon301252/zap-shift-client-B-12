@@ -20,7 +20,7 @@ const Brands = () => {
       <Marquee>
         <div className="flex justify-between items-center gap-10">
           <div>
-            <img className="ml-28" src={brand2} alt="" />
+            <img className="ml-10" src={brand2} alt="" />
           </div>
           <div>
             <img className="" src={brand3} alt="" />

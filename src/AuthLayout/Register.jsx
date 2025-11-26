@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../Hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import GoogleLogin from "./GoogleLogin";
 import axios from "axios";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const Register = () => {
   const {
@@ -16,7 +17,9 @@ const Register = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("register", location)
+  console.log("register", location);
+
+   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (data) => {
     console.log("after register", data.photo[0]);
@@ -43,17 +46,23 @@ const Register = () => {
           };
           updateUserProfile(userProfile)
             .then(() => {
-              console.log('user profile updated')
-              navigate(location.state || '/')
+              console.log("user profile updated");
+              navigate(location.state || "/");
             })
             .catch((error) => {
-             console.log(error)
+              console.log(error);
             });
         });
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+
+   const handleTogglePasswordShow = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -99,32 +108,50 @@ const Register = () => {
           )}
 
           {/* Password */}
-          <label className="label">Password</label>
-          <input
-            type="password"
-            {...register("password", {
-              required: true,
-              minLength: 6,
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            })}
-            className="input w-full"
-            placeholder="Password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-red-500">Password is required.</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-500">
-              Password must be 8 characters or longer.
-            </p>
-          )}
-          {errors.password?.type === "pattern" && (
-            <p className="text-red-500">
-              Password must be include one uppercase, one lowercase, one number,
-              and one special character.
-            </p>
-          )}
+          <div>
+            <label className="label">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  pattern:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                })}
+                className="input w-full"
+                placeholder="Password"
+              />
+
+              {/* password hide & show */}
+              <button
+                type="button"
+                onClick={handleTogglePasswordShow}
+                className="absolute top-2.5 right-3 transition-colors cursor-pointer"
+              >
+                {showPassword ? (
+                  <IoEyeOff className="text-2xl text-green-600" />
+                ) : (
+                  <IoEye className="text-2xl text-red-600" />
+                )}
+              </button>
+
+              {errors.password?.type === "required" && (
+                <p className="text-red-500">Password is required.</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500">
+                  Password must be 8 characters or longer.
+                </p>
+              )}
+              {errors.password?.type === "pattern" && (
+                <p className="text-red-500">
+                  Password must be include one uppercase, one lowercase, one
+                  number, and one special character.
+                </p>
+              )}
+            </div>
+          </div>
 
           <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
@@ -132,9 +159,13 @@ const Register = () => {
 
       <GoogleLogin />
 
-      <p className="mt-3">
-        You Already to Register Please{" "}
-        <Link state={location.state} to={`/login`} className="text-blue-500 font-bold">
+      <p className="mt-3 text-center">
+        You Already to Register Please !{" "}
+        <Link
+          state={location.state}
+          to={`/login`}
+          className="text-blue-600 hover:underline font-semibold cursor-pointer"
+        >
           Login
         </Link>
       </p>

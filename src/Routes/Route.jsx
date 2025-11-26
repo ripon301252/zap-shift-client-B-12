@@ -9,6 +9,7 @@ import Login from "../AuthLayout/login";
 import Register from "../AuthLayout/Register";
 import PrivateRouts from "./PrivateRouts";
 import Rider from "../Pages/Rider/Rider";
+import ResetPassword from "../AuthLayout/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/resetPassword",
+        Component: ResetPassword,
       },
     ],
   },
