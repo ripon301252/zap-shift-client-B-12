@@ -16,6 +16,10 @@ import Success from "../Pages/AboutUs/Success";
 import TeamOthers from "../Pages/AboutUs/TeamOthers";
 import SendParcel from "../Pages/SendParcel/SendParcel";
 
+import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -94,4 +98,16 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: 'dashboard',
+    element: <PrivateRouts>
+      <Dashboard></Dashboard>
+    </PrivateRouts>,
+    children: [
+      {
+        path: 'myParcels',
+        Component: MyParcels,
+      }
+    ]
+  }
 ]);

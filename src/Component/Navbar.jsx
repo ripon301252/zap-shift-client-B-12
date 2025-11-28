@@ -79,6 +79,19 @@ const Navbar = () => {
               Coverage
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/myParcels"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#6c5f29] font-bold underline underline-offset-4"
+                  : "text-gray-700"
+              }
+            >
+              My Parcels
+            </NavLink>
+          </li>
         </>
       )}
     </>
