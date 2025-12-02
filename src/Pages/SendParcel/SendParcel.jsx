@@ -1,13 +1,12 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 
 const SendParcel = () => {
-
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   const {
     register,
@@ -17,6 +16,8 @@ const SendParcel = () => {
   } = useForm();
 
   const axiosSecure = useAxiosSecure();
+
+  const navigate = useNavigate();
 
   const serviceCenter = useLoaderData();
   const regionsDuplicate = serviceCenter.map((c) => c.region);
@@ -54,6 +55,8 @@ const SendParcel = () => {
       }
     }
     console.log("cost", cost);
+    data.cost = cost;
+
     Swal.fire({
       title: "Agree with the Cost ?",
       text: `You will be charged ${cost} taka!`,
@@ -61,21 +64,23 @@ const SendParcel = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes I agree!",
+      confirmButtonText: "Confirm and Continue Payment!",
     }).then((result) => {
       if (result.isConfirmed) {
-
         // save the parcel info to the database
-        axiosSecure.post('/parcels', data)
-        .then(res =>{
-          console.log('after saving parcel', res.data)
-        })
-
-        // Swal.fire({
-        //   title: "!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
+        axiosSecure.post("/parcels", data).then((res) => {
+          console.log("after saving parcel", res.data);
+          if (res.data.insertedId) {
+            navigate('/dashboard/myParcels')
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Parcel has created. Please pay",
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          }
+        });
       }
     });
   };

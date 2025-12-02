@@ -15,10 +15,16 @@ import Mission from "../Pages/AboutUs/Mission";
 import Success from "../Pages/AboutUs/Success";
 import TeamOthers from "../Pages/AboutUs/TeamOthers";
 import SendParcel from "../Pages/SendParcel/SendParcel";
-
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 import Dashboard from "../Pages/Dashboard/Dashboard";
-
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
+import PaymentCancel from "../Pages/Dashboard/Payment/PaymentCancel";
+import PaymentHistory from "../Pages/Dashboard/Payment/PaymentHistory";
+import ApproveRider from "../Pages/Dashboard/ApproveRider/ApproveRider";
+import UserAdmin from "../Pages/Dashboard/UserAdmin/UserAdmin";
+import AdminRoutes from "./AdminRoutes";
+import AssignRiders from "../Pages/Dashboard/Payment/AssignRiders";
 
 export const router = createBrowserRouter([
   {
@@ -31,9 +37,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/coverage",
-        element: <PrivateRouts>
-          <Coverage />
-        </PrivateRouts>,
+        element: <PrivateRouts><Coverage /></PrivateRouts> ,
         loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
       },
       {
@@ -42,18 +46,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/sendParcel",
-        element: <PrivateRouts>
-          <SendParcel />
-        </PrivateRouts>,
+        element: <PrivateRouts><SendParcel /></PrivateRouts> ,
         loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
       },
       {
         path: "/rider",
-        element: (
-          <PrivateRouts>
-            <Rider></Rider>
-          </PrivateRouts>
-        ),
+        element: (<PrivateRouts><Rider></Rider></PrivateRouts>),
+        loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
       },
       {
         path: "/about",
@@ -77,7 +76,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      
     ],
   },
   {
@@ -99,15 +97,60 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: 'dashboard',
-    element: <PrivateRouts>
-      <Dashboard></Dashboard>
-    </PrivateRouts>,
+    path: "dashboard",
+    element: (
+      <PrivateRouts>
+        <Dashboard></Dashboard>
+      </PrivateRouts>
+    ),
     children: [
       {
-        path: 'myParcels',
+        path: "myParcels",
         Component: MyParcels,
-      }
-    ]
-  }
+      },
+      {
+        path: "paymentHistory",
+        Component: PaymentHistory,
+      },
+      {
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-canceled",
+        Component: PaymentCancel,
+      },
+      {
+        path: "approveRider",
+        // element: <ApproveRider />,
+        element: (
+          <AdminRoutes>
+            <ApproveRider />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "userAdmin",
+        // element: <UserAdmin />,
+        element: (
+          <AdminRoutes>
+            <UserAdmin />
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "assignRiders",
+        // element: <AssignRiders />,
+        element: (
+          <AdminRoutes>
+            <AssignRiders />
+          </AdminRoutes>
+        ),
+      },
+    ],
+  },
 ]);

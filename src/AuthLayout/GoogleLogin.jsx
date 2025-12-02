@@ -1,18 +1,30 @@
 import React from "react";
 import useAuth from "../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const GoogleLogin = () => {
   const { signInGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log('google location', location)
+  // console.log("google location", location);
+  const axiosSecure = useAxiosSecure()
 
   const handleGoogleSignIn = () => {
     signInGoogle()
       .then((result) => {
         console.log(result.user);
-        navigate(location.state || '/')
+        navigate(location.state || "/");
+        // create user profile to firebase
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+        };
+        axiosSecure.post('/users', userInfo)
+          .then(res => {
+            console.log('user data has been stored', res.data)
+          })
       })
       .catch((error) => {
         console.log(error);

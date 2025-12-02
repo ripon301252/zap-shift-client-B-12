@@ -1,0 +1,130 @@
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { FaUserCheck } from "react-icons/fa";
+import { IoPersonRemoveSharp, IoTrashOutline } from "react-icons/io5";
+import Swal from "sweetalert2";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
+const ApproveRider = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { refetch, data: riders = [] } = useQuery({
+    queryKey: ["riders", "Pending"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/riders");
+      return res.data;
+    },
+  });
+
+  const updateRidersStatus = (rider, status) => {
+    const updateInfo = { status: status, email: rider.riderEmail }; // FIXED
+    axiosSecure.patch(`/riders/${rider._id}`, updateInfo).then((res) => {
+      if (res.data.modifiedCount) {
+        refetch();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `Rider status is set to ${status}`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    });
+  };
+
+  const handleApproval = (rider) => {
+    updateRidersStatus(rider, "Approved");
+  };
+
+  const handleRemove = (rider) => {
+    updateRidersStatus(rider, "Removed");
+  };
+
+  return (
+    <div>
+      <h2 className="text-5xl">Rider Pending Approval : {riders.length}</h2>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th># No.</th>
+              <th>Name</th>
+              <th>Contact Number</th>
+              <th>Email</th>
+              <th>Districts</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {riders.map((rider, i) => (
+              <tr key={rider._id}>
+                <th>{i + 1}</th>
+                <td>{rider.riderName}</td>
+                <td>{rider.riderContactNo}</td>
+                <td>{rider.riderEmail}</td>
+                <td>{rider.riderDistrict}</td>
+                <td>
+                  <p
+                    className={`${
+                      rider.status === "Approved"
+                        ? "text-green-600"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {rider.status}
+                  </p>
+                </td>
+                <td>
+                  <div
+                    className="relative overflow-visible tooltip tooltip-bottom mr-3"
+                    data-tip="View"
+                  >
+                    <button className="btn btn-outline btn-square text-[#60a5fa] hover:bg-[#60a5fa] hover:text-black">
+                      <FaMagnifyingGlass className="text-lg" />
+                    </button>
+                  </div>
+                  <div
+                    className="relative overflow-visible tooltip tooltip-bottom"
+                    data-tip="Accept"
+                  >
+                    <button
+                      onClick={() => handleApproval(rider)}
+                      className="btn btn-outline btn-square text-[#0fac5d] hover:bg-[#0fac5d] hover:text-black"
+                    >
+                      <FaUserCheck className="text-lg" />
+                    </button>
+                  </div>
+                  <div
+                    className="relative overflow-visible tooltip tooltip-bottom mx-3"
+                    data-tip="Remove"
+                  >
+                    <button
+                      onClick={() => handleRemove(rider)}
+                      className="btn btn-outline btn-square text-[#fbbf24] hover:bg-[#fbbf24] hover:text-black"
+                    >
+                      <IoPersonRemoveSharp className="text-lg" />
+                    </button>
+                  </div>
+
+                  <div
+                    className="relative overflow-visible tooltip tooltip-bottom"
+                    data-tip="Reject"
+                  >
+                    <button className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black">
+                      <IoTrashOutline className="text-lg" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default ApproveRider;
