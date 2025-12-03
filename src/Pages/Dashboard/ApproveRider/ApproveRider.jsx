@@ -34,11 +34,11 @@ const ApproveRider = () => {
   };
 
   const handleApproval = (rider) => {
-    updateRidersStatus(rider, "Approved");
+    updateRidersStatus(rider, "approved");
   };
 
   const handleRemove = (rider) => {
-    updateRidersStatus(rider, "Removed");
+    updateRidersStatus(rider, "removed");
   };
 
   return (
@@ -54,7 +54,8 @@ const ApproveRider = () => {
               <th>Contact Number</th>
               <th>Email</th>
               <th>Districts</th>
-              <th>Status</th>
+              <th>Application Status</th>
+              <th>Work Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -66,10 +67,11 @@ const ApproveRider = () => {
                 <td>{rider.riderContactNo}</td>
                 <td>{rider.riderEmail}</td>
                 <td>{rider.riderDistrict}</td>
+                
                 <td>
                   <p
                     className={`${
-                      rider.status === "Approved"
+                      rider.status === "approved"
                         ? "text-green-600"
                         : "text-red-500"
                     }`}
@@ -77,6 +79,7 @@ const ApproveRider = () => {
                     {rider.status}
                   </p>
                 </td>
+                <td>{rider.workStatus}</td>
                 <td>
                   <div
                     className="relative overflow-visible tooltip tooltip-bottom mr-3"
