@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { TbTruckDelivery } from "react-icons/tb";
-import { FaAddressCard, FaMotorcycle } from "react-icons/fa";
+import { FaAddressCard, FaMotorcycle, FaTasks } from "react-icons/fa";
 import { RiAdminFill, RiEBikeFill } from "react-icons/ri";
 import useRoll from "../../Hooks/useRoll";
+import { SiGoogletasks } from "react-icons/si";
 
 const Dashboard = () => {
   const { role } = useRoll();
@@ -99,6 +100,37 @@ const Dashboard = () => {
                   </span>
                 </NavLink>
               </li>
+
+              {/* rider only links */}
+              {
+                role === 'rider' && <>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assigned Deliveries"
+                      to={`/dashboard/assignedDeliveries`}
+                    >
+                      <FaTasks className="text-xl font-bold" />
+                      <span className="is-drawer-close:hidden">Assigned Deliveries</span>
+                    </NavLink>
+                  </li>
+                  
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Completed Deliveries"
+                      to={`/dashboard/completedDeliveries`}
+                    >
+                      <SiGoogletasks className="text-xl font-bold" />
+                      <span className="is-drawer-close:hidden">Completed Deliveries</span>
+                    </NavLink>
+                  </li>
+                </>
+              }
+
+
+
+              {/* admin only links */}
               {role === "admin" && (
                 <>
                   <li>

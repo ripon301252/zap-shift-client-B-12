@@ -48,11 +48,13 @@ const AssignRiders = () => {
       riderEmail: rider.riderEmail,
       riderName: rider.riderName,
       parcelId: selectedParcel._id,
+      trackingId: selectedParcel.trackingId
     };
     axiosSecure
       .patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
       .then((res) => {
-        if (res.data.modifiedCount) {
+        console.log(res?.data?.modifiedCount)
+        if (res?.data?.parcelUpdate?.modifiedCount) {
           riderModalRef.current.close();
           parcelsRefetch();
           Swal.fire({

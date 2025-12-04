@@ -33,6 +33,35 @@ const ApproveRider = () => {
     });
   };
 
+   const handleApproveRiderDelete = (id) => {
+      console.log(id);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/riders/${id}`).then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount) {
+              // refresh the data
+              refetch()
+  
+              Swal.fire({
+                title: "Deleted!",
+                text: "Rider has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+        }
+      });
+    };
+
   const handleApproval = (rider) => {
     updateRidersStatus(rider, "approved");
   };
@@ -51,8 +80,8 @@ const ApproveRider = () => {
             <tr>
               <th># No.</th>
               <th>Name</th>
-              <th>Contact Number</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Districts</th>
               <th>Application Status</th>
               <th>Work Status</th>
@@ -64,8 +93,8 @@ const ApproveRider = () => {
               <tr key={rider._id}>
                 <th>{i + 1}</th>
                 <td>{rider.riderName}</td>
-                <td>{rider.riderContactNo}</td>
                 <td>{rider.riderEmail}</td>
+                <td>{rider.role}</td>
                 <td>{rider.riderDistrict}</td>
                 
                 <td>
@@ -114,9 +143,10 @@ const ApproveRider = () => {
 
                   <div
                     className="relative overflow-visible tooltip tooltip-bottom"
-                    data-tip="Reject"
+                    data-tip="Delete"
                   >
-                    <button className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black">
+                    <button onClick={() =>  handleApproveRiderDelete(rider._id)}
+                     className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black">
                       <IoTrashOutline className="text-lg" />
                     </button>
                   </div>

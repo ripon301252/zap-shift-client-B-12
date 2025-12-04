@@ -102,7 +102,9 @@ const MyParcels = () => {
                         <button onClick={()=>handlePayment(parcel)} className="btn btn-sm btn-outline btn-primary text-black">Pay</button>
                     }
                 </td>
-                <td>{parcel.trackingId}</td>
+                <td>
+                  <Link to={`/parcelTrack/${parcel.trackingId}`}>{parcel.trackingId}</Link>
+                </td>
                 <td>{parcel.deliveryStatus}</td>
                 <td>
                   <div

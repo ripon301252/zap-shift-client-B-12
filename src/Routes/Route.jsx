@@ -25,6 +25,10 @@ import ApproveRider from "../Pages/Dashboard/ApproveRider/ApproveRider";
 import UserAdmin from "../Pages/Dashboard/UserAdmin/UserAdmin";
 import AdminRoutes from "./AdminRoutes";
 import AssignRiders from "../Pages/Dashboard/Payment/AssignRiders";
+import AssignedDeliveries from "../Pages/Dashboard/Payment/AssignedDeliveries";
+import RiderRoutes from "./RiderRoutes";
+import CompletedDelivery from "../Pages/Dashboard/Payment/CompletedDelivery";
+import ParcelTrack from "../Pages/Dashboard/Payment/ParcelTrack";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/services",
         element: <Services />,
+      },
+      {
+        path: "/parcelTrack/:trackingId",
+        element: <ParcelTrack />,
       },
       {
         path: "/sendParcel",
@@ -124,9 +132,25 @@ export const router = createBrowserRouter([
         path: "payment-canceled",
         Component: PaymentCancel,
       },
+
+      // rider only routs
+      {
+        path: "assignedDeliveries",
+        element: <RiderRoutes>
+          <AssignedDeliveries />
+        </RiderRoutes>
+      },
+      {
+        path: "completedDeliveries",
+        element: <RiderRoutes>
+          <CompletedDelivery />
+        </RiderRoutes>
+      },
+
+
+      // admin only routs
       {
         path: "approveRider",
-        // element: <ApproveRider />,
         element: (
           <AdminRoutes>
             <ApproveRider />
@@ -135,7 +159,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "userAdmin",
-        // element: <UserAdmin />,
         element: (
           <AdminRoutes>
             <UserAdmin />
