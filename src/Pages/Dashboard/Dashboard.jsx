@@ -5,6 +5,7 @@ import { FaAddressCard, FaMotorcycle, FaTasks } from "react-icons/fa";
 import { RiAdminFill, RiEBikeFill } from "react-icons/ri";
 import useRoll from "../../Hooks/useRoll";
 import { SiGoogletasks } from "react-icons/si";
+import logoImg from "../../assets/logo.png";
 
 const Dashboard = () => {
   const { role } = useRoll();
@@ -53,9 +54,13 @@ const Dashboard = () => {
             {/* Sidebar content here */}
             <ul className="menu w-full grow">
               {/* List item */}
-              <li>
+
+              <li className="mt-5">
+                <Link to={"/"}>
+                  <img className="w-5 absolute" src={logoImg} alt="" />
+                </Link>
                 <Link
-                  to={`/`}
+                  to={`/dashboard`}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Homepage"
                 >
@@ -102,8 +107,8 @@ const Dashboard = () => {
               </li>
 
               {/* rider only links */}
-              {
-                role === 'rider' && <>
+              {role === "rider" && (
+                <>
                   <li>
                     <NavLink
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -111,10 +116,12 @@ const Dashboard = () => {
                       to={`/dashboard/assignedDeliveries`}
                     >
                       <FaTasks className="text-xl font-bold" />
-                      <span className="is-drawer-close:hidden">Assigned Deliveries</span>
+                      <span className="is-drawer-close:hidden">
+                        Assigned Deliveries
+                      </span>
                     </NavLink>
                   </li>
-                  
+
                   <li>
                     <NavLink
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -122,13 +129,13 @@ const Dashboard = () => {
                       to={`/dashboard/completedDeliveries`}
                     >
                       <SiGoogletasks className="text-xl font-bold" />
-                      <span className="is-drawer-close:hidden">Completed Deliveries</span>
+                      <span className="is-drawer-close:hidden">
+                        Completed Deliveries
+                      </span>
                     </NavLink>
                   </li>
                 </>
-              }
-
-
+              )}
 
               {/* admin only links */}
               {role === "admin" && (

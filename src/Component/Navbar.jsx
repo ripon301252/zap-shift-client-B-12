@@ -91,6 +91,18 @@ const Navbar = () => {
               My Parcels
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#6c5f29] font-bold underline underline-offset-4"
+                  : "text-gray-700"
+              }
+            >
+             Dashboard
+            </NavLink>
+          </li>
         </>
       )}
     </>
